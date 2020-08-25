@@ -3,6 +3,7 @@ package Tests;
 import Config.ServerConfig;
 import Utils.Browser;
 import org.aeonbits.owner.ConfigFactory;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -16,7 +17,7 @@ public abstract class BaseTest {
     protected Browser browser;
 
     @BeforeTest
-    public void setUp(){
+    public void setUp(ITestResult testResult){
         logger.info("Инициализация теста" );
         this.browser = new Browser();
         browser.setUp();

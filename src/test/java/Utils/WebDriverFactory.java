@@ -12,11 +12,11 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 //homework #2
 public class WebDriverFactory {
 
-    private static WebDriver driver;
+    private WebDriver driver;
     private enum Browsers {CHROME , FIREFOX}
-    private static final Logger logger = LogManager.getLogger(WebDriverFactory.class);
+    private final Logger logger = LogManager.getLogger(WebDriverFactory.class);
 
-    public static WebDriver create(String browserName) {                //создание webDriver без опций
+    public WebDriver create(String browserName) {                //создание webDriver без опций
         logger.info("Создание драйвера без дополнительных параметров " + browserName);
 
         switch (getBrowser(browserName).name().toUpperCase()){
@@ -33,7 +33,7 @@ public class WebDriverFactory {
         return driver;
     }
 
-    public static WebDriver create(String browserName, ChromeOptions options) {     //создание webDriver с опциями для chrome
+    public WebDriver create(String browserName, ChromeOptions options) {     //создание webDriver с опциями для chrome
         logger.info("Создание драйвера c параметрами " + browserName);
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
@@ -41,7 +41,7 @@ public class WebDriverFactory {
         return driver;
     }
 
-    public static WebDriver create(String browserName, FirefoxOptions options) {        //создание webDriver с опциями для firefox
+    public WebDriver create(String browserName, FirefoxOptions options) {        //создание webDriver с опциями для firefox
         logger.info("Создание драйвера c параметрами " + browserName);
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver(options);
@@ -49,7 +49,7 @@ public class WebDriverFactory {
         return driver;
     }
 
-    private static Browsers getBrowser(String browserName){
+    private Browsers getBrowser(String browserName){
         Browsers browser = null;
         try{
             browser = Browsers.valueOf(browserName);

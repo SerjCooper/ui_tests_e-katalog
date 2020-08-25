@@ -90,7 +90,7 @@
                         -Dfile.encoding=UTF-8
                     </argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>otusTest.xml</suiteXmlFile>
+                        <suiteXmlFile>testSuite-testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
                 <dependencies>

@@ -14,7 +14,8 @@ public class Browser {
     protected WebDriver driver;
     protected String browserName;
 
-    private static final Logger logger = LogManager.getLogger(Browser.class);
+    private WebDriverFactory webDriverFactory;
+    private final Logger logger = LogManager.getLogger(Browser.class);
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
 
     public Browser(String browserName){
@@ -29,36 +30,37 @@ public class Browser {
     //инициализация по умолчанию из параметров
     private void init(){
         logger.info("Инициализация браузера");
-
+        webDriverFactory = new WebDriverFactory();
         if (browserName == null)
             try {
-                browserName = System.getProperty("browser").replace("'", "");   //забираем параметр введенный через maven
+                this.browserName = System.getProperty("browser").replace("'", "");   //забираем параметр введенный через maven
             }catch (NullPointerException e){
                 //игнорим
             }
 
         if(browserName == null)                                                   //браузер устанавливается в порядке приоритета:
             if(!cfg.browser().isEmpty())                                            //1. параметра в консоли
-                browserName = cfg.browser();                                        //2. параметра в Pom.xml
+                this.browserName = cfg.browser();                                        //2. параметра в Pom.xml
             else{                                                                   //3. config.properties
                 logger.error("Имя браузера не задано");                          //и если нигде мы не нашли название браузера, кидаем исключение
                 throw new NullPointerException("Имя браузера не задано");
             }
-        browserName = browserName.toUpperCase();
+        this.browserName = browserName.toUpperCase();
     }
 
-    public void setUp() throws NullPointerException {
+    public void setUp() {
+
         switch (browserName){
             case ("FIREFOX"):
                 //   FirefoxOptions firefoxOptions = new FirefoxOptions();
                 //   firefoxOptions.addArguments("--incognito");                              //здесь будут какие либо опции
-                driver = WebDriverFactory.create(browserName);
+                driver = webDriverFactory.create(browserName);
                 break;
             default:
                 ChromeOptions chromeOptions = new ChromeOptions();                    //для включения ChromeOptions раскоменть это
                 chromeOptions.addArguments("disable-extensions");
                 //chromeOptions.addArguments("--headless");
-                driver = WebDriverFactory.create(browserName, chromeOptions);
+                driver = webDriverFactory.create(browserName, chromeOptions);
                 break;
         }
         logger.info("Запуск браузера");

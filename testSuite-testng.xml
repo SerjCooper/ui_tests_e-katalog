@@ -1,0 +1,7 @@
+<suite name="Test-method Suite" >
+    <test name="CatalogTest" group-by-instances="true">
+        <classes>
+            <class name="Tests.CatalogTest" />
+        </classes>
+    </test>
+</suite>
