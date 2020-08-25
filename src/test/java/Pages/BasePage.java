@@ -11,9 +11,10 @@ public abstract class BasePage {
     protected WebDriverWait wait;
     protected Browser browser;
 
-    private Logger logger = LogManager.getLogger(Pages.BasePage.class);
+    protected Logger logger = LogManager.getLogger(getClass());
 
     public BasePage(Browser browser){
+        logger.info("Создан объект страницы");
         this.browser = browser;
         this.driver = browser.getDriver();
         this.wait = new WebDriverWait(driver,10);
