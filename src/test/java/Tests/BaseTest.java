@@ -3,8 +3,9 @@ package Tests;
 import Config.ServerConfig;
 import Utils.Browser;
 import org.aeonbits.owner.ConfigFactory;
-import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,14 +17,14 @@ public abstract class BaseTest {
     protected ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
     protected Browser browser;
 
-    @BeforeTest
-    public void setUp(ITestResult testResult){
+    @BeforeMethod
+    public void setUp(){
         logger.info("Инициализация теста" );
         this.browser = new Browser();
         browser.setUp();
     }
 
-    @AfterTest
+    @AfterMethod
     public void quit(){
         browser.quit();
         this.browser = null;
